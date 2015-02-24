@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package calculator;
 
 /**
@@ -11,6 +10,7 @@ package calculator;
  * @author audreykellogg
  */
 public class CalculatorFrame extends javax.swing.JFrame {
+
     private Operation operation;
 
     /**
@@ -398,7 +398,7 @@ public class CalculatorFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnClearActionPerformed
-       clear();// TODO add your handling code here:
+        clear();// TODO add your handling code here:
     }//GEN-LAST:event_jbtnClearActionPerformed
 
     private void jbtnChangeSignActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnChangeSignActionPerformed
@@ -410,6 +410,9 @@ public class CalculatorFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtnPercentActionPerformed
 
     private void jbtnDivideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDivideActionPerformed
+        jlblOperand1.setText(jlblOperand.getText());
+        clear();
+        setOperation(Operation.DIVISION);
         // TODO add your handling code here:
     }//GEN-LAST:event_jbtnDivideActionPerformed
 
@@ -426,7 +429,10 @@ public class CalculatorFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtnNineActionPerformed
 
     private void jbtnMultiplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnMultiplyActionPerformed
-        // TODO add your handling code here:
+        jlblOperand1.setText(jlblOperand.getText()); 
+        clear();
+        setOperation(Operation.MULTIPLICATION);
+// TODO add your handling code here:
     }//GEN-LAST:event_jbtnMultiplyActionPerformed
 
     private void jbtnFourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnFourActionPerformed
@@ -434,7 +440,7 @@ public class CalculatorFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtnFourActionPerformed
 
     private void jbtnFiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnFiveActionPerformed
-       appendValue("5"); // TODO add your handling code here:
+        appendValue("5"); // TODO add your handling code here:
     }//GEN-LAST:event_jbtnFiveActionPerformed
 
     private void jbtnSixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSixActionPerformed
@@ -442,7 +448,9 @@ public class CalculatorFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtnSixActionPerformed
 
     private void jbtnSubtractionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSubtractionActionPerformed
-        // TODO add your handling code here:
+        jlblOperand1.setText(jlblOperand.getText());
+        clear();
+        setOperation(Operation.SUBTRACTION);// TODO add your handling code here:
     }//GEN-LAST:event_jbtnSubtractionActionPerformed
 
     private void jbtnOneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnOneActionPerformed
@@ -450,17 +458,17 @@ public class CalculatorFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtnOneActionPerformed
 
     private void jbtnTwoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnTwoActionPerformed
-       appendValue("2"); // TODO add your handling code here:
+        appendValue("2"); // TODO add your handling code here:
     }//GEN-LAST:event_jbtnTwoActionPerformed
 
     private void jbtnThreeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnThreeActionPerformed
-       appendValue("3"); // TODO add your handling code here:
+        appendValue("3"); // TODO add your handling code here:
     }//GEN-LAST:event_jbtnThreeActionPerformed
 
     private void jbtnAdditionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAdditionActionPerformed
         //store operand
         //store the operation
-       //clear the screen 
+        //clear the screen 
         jlblOperand1.setText(jlblOperand.getText());
         clear();
         setOperation(Operation.ADDITION);
@@ -471,11 +479,11 @@ public class CalculatorFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jlblZeroActionPerformed
 
     private void jbtnPeriodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnPeriodActionPerformed
-       appendValue("."); // TODO add your handling code here:
+        appendValue("."); // TODO add your handling code here:
     }//GEN-LAST:event_jbtnPeriodActionPerformed
 
     private void jbtnBackspaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnBackspaceActionPerformed
-        // TODO add your handling code here:
+        jlblOperand.setText(jlblOperand.getText().substring(0, jlblOperand.getText().length() - 1));        // TODO add your handling code here:
     }//GEN-LAST:event_jbtnBackspaceActionPerformed
 
     private void jbtnEqualsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEqualsActionPerformed
@@ -483,18 +491,32 @@ public class CalculatorFrame extends javax.swing.JFrame {
         //put result in screen
         //clear operand 1 label
         //reset operation to none
+        double result = 0.0;
+
         switch (operation) {
-            case ADDITION: 
-                double result = Double.parseDouble(jlblOperand1.getText()) + Double.parseDouble(jlblOperand.getText());
-                jlblOperand.setText(String.valueOf(result));
-                jlblOperand1.setText("");
-                setOperation(Operation.NONE);
-                
-                
+            case ADDITION:
+                result = Double.parseDouble(jlblOperand1.getText()) + Double.parseDouble(jlblOperand.getText());
                 break;
+
+            case SUBTRACTION:
+                result = Double.parseDouble(jlblOperand1.getText()) - Double.parseDouble(jlblOperand.getText());
+                break;
+
+            case DIVISION:
+                result = Double.parseDouble(jlblOperand1.getText()) / Double.parseDouble(jlblOperand.getText());
+                break;
+
+            case MULTIPLICATION:
+                result = Double.parseDouble(jlblOperand1.getText()) * Double.parseDouble(jlblOperand.getText());
+                break;
+
             default:
                 throw new AssertionError();
         }
+        
+        jlblOperand.setText(String.valueOf(result));
+        jlblOperand1.setText("");
+        setOperation(Operation.NONE);
     }//GEN-LAST:event_jbtnEqualsActionPerformed
 
     /**
@@ -565,12 +587,11 @@ public class CalculatorFrame extends javax.swing.JFrame {
         if ((jlblOperand.getText().equals("0") && (!value.equals(".")))) {
             clear();
         }
-        
+
         if (value.equals(".") && (jlblOperand.getText().isEmpty())) {
             value = "0" + value;
         }
-        
-        
+
         jlblOperand.setText(jlblOperand.getText() + value);
     }
 
