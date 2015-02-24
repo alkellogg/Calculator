@@ -11,6 +11,7 @@ package calculator;
  * @author audreykellogg
  */
 public class CalculatorFrame extends javax.swing.JFrame {
+    private Operation operation;
 
     /**
      * Creates new form CalculatorFrame
@@ -330,7 +331,6 @@ public class CalculatorFrame extends javax.swing.JFrame {
 
         jlblOperand1.setForeground(new java.awt.Color(255, 255, 255));
         jlblOperand1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jlblOperand1.setText("jLabel1");
 
         jlblOperation.setForeground(new java.awt.Color(255, 255, 255));
         jlblOperation.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -458,7 +458,12 @@ public class CalculatorFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtnThreeActionPerformed
 
     private void jbtnAdditionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAdditionActionPerformed
-        // TODO add your handling code here:
+        //store operand
+        //store the operation
+       //clear the screen 
+        jlblOperand1.setText(jlblOperand.getText());
+        clear();
+        setOperation(Operation.ADDITION);
     }//GEN-LAST:event_jbtnAdditionActionPerformed
 
     private void jlblZeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jlblZeroActionPerformed
@@ -474,7 +479,22 @@ public class CalculatorFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtnBackspaceActionPerformed
 
     private void jbtnEqualsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEqualsActionPerformed
-        // TODO add your handling code here:
+        //add numbers
+        //put result in screen
+        //clear operand 1 label
+        //reset operation to none
+        switch (operation) {
+            case ADDITION: 
+                double result = Double.parseDouble(jlblOperand1.getText()) + Double.parseDouble(jlblOperand.getText());
+                jlblOperand.setText(String.valueOf(result));
+                jlblOperand1.setText("");
+                setOperation(Operation.NONE);
+                
+                
+                break;
+            default:
+                throw new AssertionError();
+        }
     }//GEN-LAST:event_jbtnEqualsActionPerformed
 
     /**
@@ -542,10 +562,24 @@ public class CalculatorFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void appendValue(String value) {
-        jlblOperand.setText(jlblOperand.getText() + value   );
+        if ((jlblOperand.getText().equals("0") && (!value.equals(".")))) {
+            clear();
+        }
+        
+        if (value.equals(".") && (jlblOperand.getText().isEmpty())) {
+            value = "0" + value;
+        }
+        
+        
+        jlblOperand.setText(jlblOperand.getText() + value);
     }
 
     private void clear() {
         jlblOperand.setText("");
+    }
+
+    private void setOperation(Operation operation) {
+        this.operation = operation;
+        jlblOperation.setText(this.operation.getLabel());
     }
 }
